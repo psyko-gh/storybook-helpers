@@ -1,0 +1,119 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "demo/src/my-element3/my-element3.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "An sample element.",
+          "name": "MyElement3",
+          "members": [
+            {
+              "kind": "field",
+              "name": "objectA",
+              "default": "undefined",
+              "attribute": "objectA"
+            },
+            {
+              "kind": "field",
+              "name": "objectB",
+              "default": "undefined"
+            },
+            {
+              "kind": "field",
+              "name": "objectC",
+              "default": "undefined"
+            },
+            {
+              "kind": "field",
+              "name": "objectD",
+              "attribute": "objectD"
+            },
+            {
+              "kind": "field",
+              "name": "funcA",
+              "default": "undefined",
+              "attribute": "funcA"
+            },
+            {
+              "kind": "field",
+              "name": "funcB",
+              "default": "undefined"
+            },
+            {
+              "kind": "field",
+              "name": "funcC",
+              "default": "undefined"
+            },
+            {
+              "kind": "field",
+              "name": "funcD",
+              "default": "undefined",
+              "attribute": "funcD"
+            },
+            {
+              "kind": "method",
+              "name": "log",
+              "parameters": [
+                {
+                  "name": "k",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "objectA",
+              "default": "undefined",
+              "fieldName": "objectA"
+            },
+            {
+              "name": "objectD",
+              "fieldName": "objectD"
+            },
+            {
+              "name": "funcA",
+              "default": "undefined",
+              "fieldName": "funcA"
+            },
+            {
+              "name": "funcD",
+              "default": "undefined",
+              "fieldName": "funcD"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "my-element3",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MyElement3",
+          "declaration": {
+            "name": "MyElement3",
+            "module": "demo/src/my-element3/my-element3.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "my-element3",
+          "declaration": {
+            "name": "MyElement3",
+            "module": "demo/src/my-element3/my-element3.ts"
+          }
+        }
+      ]
+    },
+  ]
+}
