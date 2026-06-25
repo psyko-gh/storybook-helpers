@@ -11,7 +11,7 @@ setStorybookHelpersConfig({
   /** Adds a <script> tag where a `component` variable will reference the story's component */
   setComponentVariable: false,
   /** renders default values for attributes and CSS properties */
-  renderDefaultValues: false,
+  renderDefaultValues: true,
 });
 
 setCustomElementsManifest(customElements);
