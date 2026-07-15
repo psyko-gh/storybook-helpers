@@ -35,6 +35,7 @@ export function getAttributesAndProperties(
   const propArgs: ArgTypes = {};
 
   component?.members?.forEach((member) => {
+    debugger
     if (member.kind !== "field") {
       return;
     }
@@ -70,6 +71,21 @@ export function getAttributesAndProperties(
       : removeQuotes(member.default || "");
     const control = getControl(propType, attribute !== undefined);
 
+    let t;
+    if (defaultValue && defaultValue !== 'undefined') {
+      if (defaultValue === "''") {
+        t = ""
+      } else {
+        if (control === "object") {
+          t = JSON.parse(formatToValidJson(defaultValue))
+        } else {
+          t = defaultValue
+        }
+      }
+    } else {
+      t = undefined
+    }
+
     args[name] = {
       name: name,
       description: getDescription(
@@ -77,7 +93,7 @@ export function getAttributesAndProperties(
         propName,
         member.deprecated as string,
       ),
-      defaultValue: defaultValue
+      defaultValue: defaultValue && defaultValue !== 'undefined'
         ? defaultValue === "''"
           ? ""
           : control === "object"
@@ -392,7 +408,7 @@ function getDefaultValue(controlType: ControlOptions, defaultValue?: string) {
 
 function getControl(type: string, isAttribute = false): ControlOptions {
   if (!type) {
-    return "text";
+    return isAttribute ? "text" : undefined;
   }
 
   const lowerType = type.toLowerCase();
@@ -400,6 +416,14 @@ function getControl(type: string, isAttribute = false): ControlOptions {
     .split("|")
     .map((x) => x.trim())
     .filter((x) => x !== "" && x !== "null" && x !== "undefined");
+
+  if (isFunction(lowerType) && !isAttribute) {
+    return undefined;
+  }
+
+  if (isObject(lowerType) && !isAttribute) {
+    return "object";
+  }
 
   if (isObject(lowerType) && !isAttribute) {
     return "object";
@@ -419,6 +443,10 @@ function getControl(type: string, isAttribute = false): ControlOptions {
 
   // if types is a list of string options
   return options.length > 1 ? "select" : "text";
+}
+
+function isFunction(type: string) {
+  return type.includes("function");
 }
 
 function isObject(type: string) {

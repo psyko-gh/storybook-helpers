@@ -5,7 +5,9 @@ import type { StoryObj } from "@storybook/web-components-vite";
 import type { MyElement2 } from "./my-element2.js";
 
 const { args, events, argTypes, template } = getStorybookHelpers("my-element2");
-
+console.log(args)
+console.log(argTypes)
+// argTypes.someOptionalFunction.control = false;
 const meta = {
   title: "My Element2",
   component: "my-element2",
@@ -20,6 +22,5 @@ const meta = {
 export default meta;
 
 export const Default: StoryObj<MyElement2 & typeof args> = {
-  render: (args) => html` ${template(args)} `,
-  args: {},
+  render: (args) => template(args),
 };

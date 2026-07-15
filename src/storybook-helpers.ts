@@ -135,7 +135,7 @@ function getArgTypes(
     properties: attrsAndProps.propArgs,
     slots: slots.args,
   };
-
+debugger
   const argTypes: ArgTypes = {};
 
   // Combine all resets
@@ -166,9 +166,10 @@ function getArgTypes(
  */
 function getArgs<T>(argTypes: ArgTypes): Partial<T> & { [key: string]: any } {
   const args: Partial<T> & { [key: string]: any } = {};
+  debugger
   for (const [key, value] of Object.entries(argTypes)) {
     if (value?.control) {
-      args[key as keyof T] = getDefaultValue(value.defaultValue) || "";
+      args[key as keyof T] = getDefaultValue(value.defaultValue);
     }
   }
   return args;

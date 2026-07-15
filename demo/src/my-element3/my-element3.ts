@@ -10,10 +10,35 @@ import { customElement, property } from "lit/decorators.js";
 @customElement("my-element3")
 export class MyElement3 extends LitElement {
   // Missing attribute: false
-  @property({type: Object}) objectA = undefined;
 
+  /**
+   * @type {Object}
+   */
+  @property({attribute: false}) objectA = undefined;
+
+  // __objectA = undefined;
+
+
+  // /**
+  //  *
+  //  * @type {object} v
+  //  */
+  // @property({attribute: false})
+  // set objectA(v) {
+  //   console.log('typeof objectA, ', typeof v)
+  //   console.trace(v)
+  //   this.__objectA = v;
+  // }
+  //
+  // get objectA() {
+  //   return this.__objectA;
+  // }
+  //
   // Missing type
-  @property({attribute: false}) objectB = undefined;
+  /**
+   * @type {object}
+   */
+  @property({attribute: false}) objectB = {test: 'b'};
 
   // Proper way of defining an object prop
   @property({type: Object, attribute: false}) objectC = undefined;
@@ -24,10 +49,14 @@ export class MyElement3 extends LitElement {
   @property({type: Object})
   funcA = undefined;
 
+  /**
+   *
+   * @type {Function}
+   */
   @property({attribute: false})
-  funcB = undefined;
+  funcB = a => a +1;
 
-  @property({type: Object, attribute: false})
+  @property({attribute: false})
   funcC = undefined;
 
   @property({type: Object, attribute: true})

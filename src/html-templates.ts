@@ -142,7 +142,7 @@ function getTemplateOperators(
   const attrOperators: any = {};
   const propOperators: any = {};
   const additionalAttrs: any = {};
-
+  debugger
   Object.keys(attrArgs).forEach((key) => {
     const attr = attrArgs[key];
     const attrName = attr.name;
@@ -151,6 +151,9 @@ function getTemplateOperators(
       (attr.control as any).type === "boolean"
         ? `?${attrName}`
         : (attrName as string);
+    if (key == 'someOptionalFunction' || key == 'funcWithDefault') {
+      console.log(key, attrValue !== attrArgs[key].defaultValue, attrValue)
+    }
     if (
       attrValue !== attrArgs[key].defaultValue ||
       options.renderDefaultValues
@@ -160,7 +163,7 @@ function getTemplateOperators(
       attrOperators[prop] = undefined;
     }
   });
-
+  console.log(attrOperators)
   Object.keys(args)
     .filter((key) => propArgs[key])
     .forEach((key) => {

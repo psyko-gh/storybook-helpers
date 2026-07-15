@@ -29,6 +29,55 @@ export class MyElement2 extends LitElement {
   @property({ type: Number, reflect: true })
   count?: number = 0;
 
+  __objectA = undefined;
+
+
+  @property()
+  set objectA(v) {
+    throw new Error('haaa')
+    console.log('aaaaa, ', v)
+    console.trace(v)
+    this.__objectA = v;
+  }
+
+  get objectA() {
+    return this.__objectA;
+  }
+
+  // Missing type
+  @property({attribute: false}) objectB = undefined;
+
+  // Proper way of defining an object prop
+  @property({type: Object, attribute: false}) objectC = undefined;
+
+  // Same as objectA
+  @property({type: Object, attribute: true}) objectD?;
+
+  // Did not report for function, but the results are similar
+  @property({type: Object})
+  funcA = undefined;
+
+  @property({attribute: false})
+  funcB = undefined;
+
+  @property({type: Object, attribute: false})
+  funcC = undefined;
+
+  @property({type: Object, attribute: true})
+  funcD = undefined;
+
+  /**
+   * @type {(n: number) => number}
+   */
+  @property({ attribute: false })
+  someOptionalFunction  = (n) => 2*n;
+
+  /**
+   * @type {(n: number) => number}
+   */
+  @property({ attribute: false })
+  funcWithDefault = (n) => 2*n;
+
   /** Adds a label to the component */
   @property()
   label? = "count is:";
@@ -50,6 +99,7 @@ export class MyElement2 extends LitElement {
   }
 
   private _onClick() {
+    console.log('cvlik')
     this.count!++;
     this.dispatchEvent(new CustomEvent("count", { bubbles: true }));
   }
@@ -58,21 +108,27 @@ export class MyElement2 extends LitElement {
     return html`
       <div class="card">
         <div>
-          <a
-            href="https://storybook.js.org/docs/get-started/web-components-vite"
-            target="_blank"
-          >
-            <img
-              src="https://wc-toolkit.com/_astro/wc-toolkit-icon.M2DETGo4_Z26pE6D.webp"
-              class="logo"
-              alt="Storybook logo"
-            />
-          </a>
+                someOptionalFunction: ${typeof this.someOptionalFunction}<br/>
+                funcWithDefault: ${typeof this.funcWithDefault}<br/>
+            <table>
+                <thead>
+                <tr>
+                    <th>var</th>
+                    <th>typeof var</th>
+                    <th>value</th>
+                </tr>
+                </thead>
+                <tbody>
+                ${this.log('objectA')}
+                </tbody>
+            </table>
+            
+          
         </div>
         <slot></slot>
         <div>
           <button @click=${this._onClick} part="button">
-            ${this.label} ${this.count}
+            ${this.label} ${this.count} 
             <slot name="button-content"></slot>
           </button>
         </div>
@@ -81,6 +137,21 @@ export class MyElement2 extends LitElement {
     `;
   }
 
+  log(k: string) {
+    const v = this[k];
+    return html`
+        <tr>
+        <td>${k}</td>
+        <td>${typeof v}</td>
+        <td>${v === null 
+                ? 'null' 
+                : v === undefined 
+                        ? 'undefined' 
+                        : typeof v == 'string' 
+                                ? `"${v}"` 
+                                : typeof v == 'object' ? JSON.stringify(v) : v}</td>
+    </tr>`
+  }
   static styles = css`
     :host {
       --card-border-color: #ccc;
@@ -95,6 +166,15 @@ export class MyElement2 extends LitElement {
       text-align: center;
     }
 
+      table {
+          width: 100%;
+          border: 1px solid gray;
+          border-collapse: collapse;
+      }
+      
+      table td {
+          border: 1px solid gray;
+      }
     .logo {
       max-height: 6em;
       padding: 1.5em;
